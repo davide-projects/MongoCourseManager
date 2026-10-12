@@ -2367,18 +2367,18 @@ separazione DAL / BLL / PL
 
 Prima di passare agli esercizi successivi, rispondere alle seguenti domande.
 
-1. Perché `CourseEntity` si trova nel DAL e `CourseModel` nella BLL?
-2. Perché il Controller non utilizza direttamente `MongoDbContext`?
-3. Che differenza c'è tra Repository e Service?
-4. Dove viene utilizzato AutoMapper?
-5. A cosa serve `IMongoCollection<CourseEntity>`?
-6. Che differenza c'è tra `$push` e `$addToSet`?
-7. Perché in questo esempio abbiamo scelto `$addToSet`?
-8. Cosa fa `$pull`?
-9. Perché la paginazione usa `Skip()` e `Limit()`?
-10. Perché `CountDocumentsAsync()` viene eseguito prima di applicare `Skip()` e `Limit()`?
+1. Perché `CourseEntity` si trova nel DAL e `CourseModel` nella BLL? Perchè l'entità fa riferimento al documentto (Parliamo di db non relazionali), mentre il model prende l'entità dal layer dal per applicarne la business logic
+2. Perché il Controller non utilizza direttamente `MongoDbContext`? Perchè il controller ha la responsabilità di chiamare solo l'end point (divisione di responsabilità)
+3. Che differenza c'è tra Repository e Service? Il repository è il livello da dove vengono presi i dati e accesso al db, mentre il service applica la business logic con le varie elaborazioni e controlli
+4. Dove viene utilizzato AutoMapper? Nel CourseService per mappare la risposta e aggiungere anche i dati di Audit
+5. A cosa serve `IMongoCollection<CourseEntity>`? Usato nel dbContext per indicare all'applicativo che l'entità corso è la collection del db
+6. Che differenza c'è tra `$push` e `$addToSet`? in AddToSet in fase di inserimento applica un controllo che blocca i duplicati
+7. Perché in questo esempio abbiamo scelto `$addToSet`? Perchè nelle prove dobbiamo provare ad inserire un duplicato
+8. Cosa fa `$pull`? rimuove un tag
+9. Perché la paginazione usa `Skip()` e `Limit()`? skip salta i primi n risultati in modo che salta i precedenti risultati mentre limit serve per appunto limitare una paginazione troppo grande
+10. Perché `CountDocumentsAsync()` viene eseguito prima di applicare `Skip()` e `Limit()`? dobiamo contare la grandezza del documento prima di poterla paginare
 11. Perché normalizziamo `Code` nella BLL e non nel Controller?
-12. Perché `MongoDbContext` viene registrato Singleton?
+12. Perché `MongoDbContext` viene registrato Singleton? perchè ci deve essere soltanto un'istanza della sessione
 
 ---
 
