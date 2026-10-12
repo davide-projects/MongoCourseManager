@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="MongoCourseManager.BLL/MongoCourseManager.BLL.csproj" />
+  <Project Path="MongoCourseManager.DAL/MongoCourseManager.DAL.csproj" />
+  <Project Path="MongoCourseManager.PL/MongoCourseManager.PL.csproj" />
+</Solution>

@@ -1,0 +1,6 @@
+@MongoCourseManager.PL_HostAddress = http://localhost:5160
+
+GET {{MongoCourseManager.PL_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
