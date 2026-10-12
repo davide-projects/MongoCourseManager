@@ -37,6 +37,8 @@ public class CourseRepository : ICourseRepository
         string? text,
         string? category,
         bool? isPublished,
+        int? minDurationHours,
+        string? tag,
         int page,
         int pageSize,
         bool sortDescending)
@@ -66,6 +68,18 @@ public class CourseRepository : ICourseRepository
         if (isPublished.HasValue)
         {
             filters.Add(filterBuilder.Eq(x => x.IsPublished, isPublished.Value));
+        }
+
+        if (minDurationHours.HasValue)
+        {
+            filters.Add(
+                filterBuilder.Gte(
+                    x => x.DurationHours, minDurationHours.Value));
+        }
+
+        if (!string.IsNullOrWhiteSpace(tag))
+        {
+            filters.Add(filterBuilder.AnyEq(x => x.Tags, tag));
         }
 
         var finalFilter = filters.Count == 0

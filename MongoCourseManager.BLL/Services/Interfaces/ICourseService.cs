@@ -10,6 +10,8 @@ public interface ICourseService
         string? text,
         string? category,
         bool? isPublished,
+        int? minDurationHours,
+        string? tag,
         int page,
         int pageSize,
         bool sortDescending);

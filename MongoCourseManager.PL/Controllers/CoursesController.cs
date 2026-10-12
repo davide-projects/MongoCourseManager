@@ -20,6 +20,8 @@ public class CoursesController : ControllerBase
         [FromQuery] string? text,
         [FromQuery] string? category,
         [FromQuery] bool? isPublished,
+        [FromQuery] int? minDurationHours,
+        [FromQuery] string? tag,
         [FromQuery] int page = 1,
         [FromQuery] int pageSize = 10,
         [FromQuery] bool sortDescending = false)
@@ -28,6 +30,8 @@ public class CoursesController : ControllerBase
             text,
             category,
             isPublished,
+            minDurationHours,
+            tag,
             page,
             pageSize,
             sortDescending);

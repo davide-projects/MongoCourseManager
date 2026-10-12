@@ -32,6 +32,8 @@ public class CourseService : ICourseService
         string? text,
         string? category,
         bool? isPublished,
+        int? minDurationHours,
+        string? tag,
         int page,
         int pageSize,
         bool sortDescending)
@@ -40,10 +42,21 @@ public class CourseService : ICourseService
         pageSize = pageSize < 1 ? 10 : pageSize;
         pageSize = pageSize > 50 ? 50 : pageSize;
 
+        if (!string.IsNullOrWhiteSpace(tag))
+        {
+            tag = tag.Trim().ToLowerInvariant();
+        }
+        else
+        {
+            tag = null;
+        }
+
         var result = await _repository.SearchAsync(
             text,
             category,
             isPublished,
+            minDurationHours,
+            tag,
             page,
             pageSize,
             sortDescending);
