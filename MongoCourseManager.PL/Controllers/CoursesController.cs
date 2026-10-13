@@ -119,6 +119,30 @@ public class CoursesController : ControllerBase
             : NotFound();
     }
 
+    [HttpPatch("{id}/publish")]
+    public async Task<IActionResult> SetPublished(
+        string id)
+    {
+        var updated = await _service.SetPublishedAsync(
+            id,
+            true);
+        return updated
+            ? NoContent()
+            : NotFound();
+    }
+
+    [HttpPatch("{id}/unpublish")]
+    public async Task<IActionResult> SetUnpublished(
+        string id)
+    {
+        var updated = await _service.SetPublishedAsync(
+            id,
+            false);
+        return updated
+            ? NoContent()
+            : NotFound();
+    }
+
     [HttpPost("{id}/tags")]
     public async Task<IActionResult> AddTag(
         string id,
