@@ -157,8 +157,16 @@ public class CourseService : ICourseService
 
     public async Task<bool> AddTagAsync(string id, string tag)
     {
+        var course = await _repository.GetByIdAsync(id);
+
         if (string.IsNullOrWhiteSpace(tag))
             throw new ArgumentException("Il tag è obbligatorio.");
+
+        if (course is null)
+            return false;
+
+        if (course.Tags.Count >= 8)
+            throw new InvalidOperationException("Un corso può avere al massimo 8 tag.");
 
         var normalizedTag = tag.Trim().ToLowerInvariant();
 

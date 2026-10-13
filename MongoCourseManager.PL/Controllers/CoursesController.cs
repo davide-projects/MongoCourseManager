@@ -160,6 +160,10 @@ public class CoursesController : ControllerBase
         {
             return BadRequest(new { message = exception.Message });
         }
+        catch (InvalidOperationException exception)
+        {
+            return Conflict(new { message = exception.Message });
+        }
     }
 
     [HttpDelete("{id}/tags/{tag}")]
