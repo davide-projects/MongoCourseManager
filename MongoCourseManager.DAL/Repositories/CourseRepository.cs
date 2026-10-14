@@ -189,4 +189,21 @@ public class CourseRepository : ICourseRepository
 
         return result.MatchedCount > 0;
     }
+
+    public async Task<bool> RemoveAllTagsAsync(string id)
+    {
+        if (!ObjectId.TryParse(id, out _))
+            return false;
+
+        
+        var update = Builders<CourseEntity>.Update
+            .Set(x => x.Tags, new List<string>())
+            .Set(x => x.UpdatedAt, DateTime.UtcNow);
+
+        var result = await _collection.UpdateOneAsync(
+            x => x.Id == id,
+            update);
+
+        return result.MatchedCount > 0;
+    }
 }

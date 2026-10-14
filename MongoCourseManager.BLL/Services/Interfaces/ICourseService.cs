@@ -27,5 +27,7 @@ public interface ICourseService
     Task<bool> AddTagAsync(string id, string tag);
 
     Task<bool> RemoveTagAsync(string id, string tag);
+
+    Task<bool> RemoveAllTagsAsync(string id);
     Task<CourseModel?> DuplicateAsync(string id);
 }

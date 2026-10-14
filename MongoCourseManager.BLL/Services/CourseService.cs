@@ -3,6 +3,7 @@ using MongoCourseManager.BLL.Models;
 using MongoCourseManager.BLL.Services.Interfaces;
 using MongoCourseManager.DAL.Entities;
 using MongoCourseManager.DAL.Repositories.Interfaces;
+using MongoDB.Driver;
 
 namespace MongoCourseManager.BLL.Services;
 
@@ -183,7 +184,18 @@ public class CourseService : ICourseService
         return await _repository.RemoveTagAsync(id, normalizedTag);
     }
 
-    // questa funzione deve duplicare un corso esistente, creando una copia con un nuovo ID e lo stato di pubblicazione impostato a false
+    public async Task<bool> RemoveAllTagsAsync(string id)
+    {
+        if (string.IsNullOrWhiteSpace(id))
+            throw new ArgumentException("Il tag è obbligatorio.");
+
+        var normalizedTag = id.Trim().ToLowerInvariant();
+
+        return await _repository.RemoveAllTagsAsync(id);
+    }
+
+
+
     public async Task<CourseModel?> DuplicateAsync(string id)
     {
         var course = await _repository.GetByIdAsync(id);
@@ -193,7 +205,7 @@ public class CourseService : ICourseService
 
         var model = _mapper.Map<CreateCourseModel>(course);
 
-        model.Code = course.Code + "-COPY";
+        model.Code = course.Code + "- COPY";
         model.Title = course.Title + " - Copia";
         model.IsPublished = false;
 

@@ -106,6 +106,42 @@ public class CoursesController : ControllerBase
             : NotFound();
     }
 
+    [HttpDelete("{id}/tags")]
+    public async Task<IActionResult> DeleteAllTags(string id)
+    {
+        try
+        {
+            var updated = await _service.RemoveAllTagsAsync(id);
+
+            return updated
+                ? NoContent()
+                : NotFound();
+        }
+        catch (ArgumentException exception)
+        {
+            return BadRequest(new { message = exception.Message });
+        }
+    }
+
+    [HttpDelete("{id}/tags/{tag}")]
+    public async Task<IActionResult> RemoveTag(
+        string id,
+        string tag)
+    {
+        try
+        {
+            var updated = await _service.RemoveTagAsync(id, tag);
+
+            return updated
+                ? NoContent()
+                : NotFound();
+        }
+        catch (ArgumentException exception)
+        {
+            return BadRequest(new { message = exception.Message });
+        }
+    }
+
     [HttpPatch("{id}/publication")]
     public async Task<IActionResult> SetPublished(
         string id,
@@ -188,25 +224,6 @@ public class CoursesController : ControllerBase
         catch (InvalidOperationException exception)
         {
             return Conflict(new { message = exception.Message });
-        }
-    }
-
-    [HttpDelete("{id}/tags/{tag}")]
-    public async Task<IActionResult> RemoveTag(
-        string id,
-        string tag)
-    {
-        try
-        {
-            var updated = await _service.RemoveTagAsync(id, tag);
-
-            return updated
-                ? NoContent()
-                : NotFound();
-        }
-        catch (ArgumentException exception)
-        {
-            return BadRequest(new { message = exception.Message });
         }
     }
 }

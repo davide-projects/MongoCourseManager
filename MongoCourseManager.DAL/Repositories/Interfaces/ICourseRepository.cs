@@ -29,4 +29,6 @@ public interface ICourseRepository
     Task<bool> AddTagAsync(string id, string tag);
 
     Task<bool> RemoveTagAsync(string id, string tag);
+
+    Task<bool> RemoveAllTagsAsync(string id);
 }
