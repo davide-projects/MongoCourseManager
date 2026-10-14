@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MongoCourseManager.BLL.Models;
 using MongoCourseManager.BLL.Services.Interfaces;
+using MongoCourseManager.DAL.Entities;
 
 namespace MongoCourseManager.PL.Controllers;
 
@@ -155,6 +156,30 @@ public class CoursesController : ControllerBase
             return updated
                 ? NoContent()
                 : NotFound();
+        }
+        catch (ArgumentException exception)
+        {
+            return BadRequest(new { message = exception.Message });
+        }
+        catch (InvalidOperationException exception)
+        {
+            return Conflict(new { message = exception.Message });
+        }
+    }
+
+    [HttpPost("{id}/duplicate")]
+    public async Task<ActionResult<CourseModel>> DuplicateCourseAsync(string id)
+    {
+        try
+        {
+            var result = await _service.DuplicateAsync(id);
+
+            return result is null
+                ? NotFound()
+                : CreatedAtAction(
+                    nameof(GetById),
+                    new { id = result.Id },
+                    result);
         }
         catch (ArgumentException exception)
         {

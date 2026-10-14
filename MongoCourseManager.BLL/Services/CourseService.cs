@@ -183,6 +183,23 @@ public class CourseService : ICourseService
         return await _repository.RemoveTagAsync(id, normalizedTag);
     }
 
+    // questa funzione deve duplicare un corso esistente, creando una copia con un nuovo ID e lo stato di pubblicazione impostato a false
+    public async Task<CourseModel?> DuplicateAsync(string id)
+    {
+        var course = await _repository.GetByIdAsync(id);
+
+        if (course is null)
+            return null;
+
+        var model = _mapper.Map<CreateCourseModel>(course);
+
+        model.Code = course.Code + "-COPY";
+        model.Title = course.Title + " - Copia";
+        model.IsPublished = false;
+
+        return await CreateAsync(model);
+    }
+
     private static void ValidateCourse(
         string code,
         string title,

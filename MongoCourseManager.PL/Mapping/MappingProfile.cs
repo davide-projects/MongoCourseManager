@@ -1,9 +1,16 @@
-﻿using AutoMapper;
+﻿
+
+using AutoMapper;
 using MongoCourseManager.BLL.Models;
 using MongoCourseManager.DAL.Entities;
 
 namespace MongoCourseManager.PL.Mapping;
 
+/// <summary>
+/// questo mapper serve per mappare i modelli di dominio
+/// (CourseModel, CreateCourseModel, UpdateCourseModel)
+/// con le entità del database (CourseEntity) e viceversa.
+/// </summary>>
 public class MappingProfile : Profile
 {
     public MappingProfile()
@@ -31,5 +38,7 @@ public class MappingProfile : Profile
             .ForMember(
                 destination => destination.UpdatedAt,
                 options => options.Ignore());
+
+        CreateMap<CourseEntity, CreateCourseModel>();
     }
 }
